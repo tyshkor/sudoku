@@ -58,3 +58,30 @@ impl Sudoku {
         true
     }
 }
+
+impl std::str::FromStr for Sudoku {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let grid: Vec<Vec<u8>> = s
+            .lines()
+            .map(|line| {
+                line.chars()
+                    .filter(|&c| c.is_digit(10))
+                    .map(|c| c.to_digit(10).unwrap() as u8)
+                    .collect()
+            })
+            .collect();
+
+        if grid.len() != 9 || grid.iter().any(|row| row.len() != 9) {
+            return Err(Error::msg("wrong grid size"));
+        }
+
+        let mut array = [[0; SIZE]; SIZE];
+        for (i, row) in grid.iter().enumerate() {
+            array[i].copy_from_slice(&row[..SIZE]);
+        }
+
+        Ok(Sudoku::new(array))
+    }
+}
