@@ -1,4 +1,4 @@
-use std::{collections::HashSet, ops::Range};
+use std::{collections::HashSet, ops::Range, str::FromStr, fmt::Display};
 
 use anyhow::{Error, Result};
 
@@ -51,7 +51,7 @@ impl Sudoku {
     }
 
     fn is_valid_unit(unit: &[u8]) -> bool {
-        let set: HashSet<u8> = unit.to_vec().into_iter().collect();
+        let set: HashSet<u8> = unit.iter().copied().collect();
         if set.contains(&ZERO) || set.len() != SIZE {
             return false;
         }
@@ -59,7 +59,7 @@ impl Sudoku {
     }
 }
 
-impl std::str::FromStr for Sudoku {
+impl FromStr for Sudoku {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -67,7 +67,7 @@ impl std::str::FromStr for Sudoku {
             .lines()
             .map(|line| {
                 line.chars()
-                    .filter(|&c| c.is_digit(10))
+                    .filter(|&c| c.is_ascii_digit())
                     .map(|c| c.to_digit(10).unwrap() as u8)
                     .collect()
             })
@@ -86,11 +86,11 @@ impl std::str::FromStr for Sudoku {
     }
 }
 
-impl std::fmt::Display for Sudoku {
+impl Display for Sudoku {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for row in &self.grid {
             for &num in row {
-                write!(f, "{}", num)?;
+                write!(f, "{num}")?;
             }
             writeln!(f)?;
         }
