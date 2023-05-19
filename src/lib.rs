@@ -1,11 +1,9 @@
 use std::{collections::HashSet, fmt::Display, ops::Range, str::FromStr};
 
 use anyhow::{Error, Result};
+use consts::{FULL_RANGE, SIZE, RANGE, ZERO};
 
-const FULL_RANGE: Range<usize> = 0..9;
-const RANGE: Range<usize> = 0..3;
-const SIZE: usize = 9;
-const ZERO: u8 = 0;
+mod consts;
 
 #[derive(Debug)]
 pub struct Sudoku {
