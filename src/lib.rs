@@ -85,3 +85,15 @@ impl std::str::FromStr for Sudoku {
         Ok(Sudoku::new(array))
     }
 }
+
+impl std::fmt::Display for Sudoku {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for row in &self.grid {
+            for &num in row {
+                write!(f, "{}", num)?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
