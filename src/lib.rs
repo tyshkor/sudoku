@@ -1,4 +1,4 @@
-use std::{collections::HashSet, ops::Range, str::FromStr, fmt::Display};
+use std::{collections::HashSet, fmt::Display, ops::Range, str::FromStr};
 
 use anyhow::{Error, Result};
 
@@ -149,6 +149,23 @@ mod tests {
                               961537284\n\
                               287419635\n\
                               345286179"
+            .parse()
+            .unwrap();
+        println!("{}", sudoku);
+        assert!(!sudoku.valid());
+    }
+
+    #[test]
+    fn test_invalid_sudoku_box() {
+        let sudoku: Sudoku = "534678912\n\
+                          672195348\n\
+                          198342567\n\
+                          859761423\n\
+                          426855791\n\
+                          713924856\n\
+                          961537284\n\
+                          287419635\n\
+                          345286179"
             .parse()
             .unwrap();
         println!("{}", sudoku);
