@@ -189,4 +189,17 @@ mod tests {
         assert!(!sudoku.valid());
     }
 
+    #[test]
+    fn test_invalid_sudoku_incomplete_grid() {
+        let sudoku = "534678912\n\
+                          672195348\n\
+                          198342567\n\
+                          859761423\n\
+                          426853791\n\
+                          713924856\n\
+                          961537284\n\
+                          287419635"
+            .parse::<Sudoku>();
+        assert!(sudoku.is_err());
+    }
 }
