@@ -97,3 +97,25 @@ impl std::fmt::Display for Sudoku {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_valid_sudoku() {
+        let sudoku: Sudoku = "534678912\n\
+                              672195348\n\
+                              198342567\n\
+                              859761423\n\
+                              426853791\n\
+                              713924856\n\
+                              961537284\n\
+                              287419635\n\
+                              345286179"
+            .parse()
+            .unwrap();
+        println!("{}", sudoku);
+        assert!(sudoku.valid());
+    }
+}
