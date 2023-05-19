@@ -52,6 +52,8 @@ impl Sudoku {
 
     fn is_valid_unit(unit: &[u8]) -> bool {
         let set: HashSet<u8> = unit.iter().copied().collect();
+        // Zero value is not allowed in Sudoku
+        // Checking for the fact that each number existed just once in the unit
         if set.contains(&ZERO) || set.len() != SIZE {
             return false;
         }
@@ -120,7 +122,7 @@ mod tests {
     }
 
     #[test]
-    fn test_invalid_sudoku() {
+    fn test_invalid_sudoku_vertical() {
         let sudoku: Sudoku = "534678912\n\
                               672195348\n\
                               198342567\n\
@@ -128,6 +130,23 @@ mod tests {
                               426853791\n\
                               713924856\n\
                               861537284\n\
+                              287419635\n\
+                              345286179"
+            .parse()
+            .unwrap();
+        println!("{}", sudoku);
+        assert!(!sudoku.valid());
+    }
+
+    #[test]
+    fn test_invalid_sudoku_horizontal() {
+        let sudoku: Sudoku = "534678912\n\
+                              672195348\n\
+                              198342567\n\
+                              859761433\n\
+                              426853791\n\
+                              713924856\n\
+                              961537284\n\
                               287419635\n\
                               345286179"
             .parse()
